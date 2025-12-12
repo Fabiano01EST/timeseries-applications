@@ -1,0 +1,187 @@
+---
+title: "Análises de Séries Temporais"
+author: "Fabiano F. dos Santos"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+# Carregar o pacote que contém o arquivo hare
+#install.packages("TSA")  # Se necessário
+library(TSA)
+
+# Carregar o arquivo hare
+data(hare)
+
+# Criar um gráfico da série temporal
+plot(hare, type = "l", main = "Abundância da Lebre Canadense ao Longo do Tempo",
+     xlab = "Ano", ylab = "Abundância", col = "blue")
+
+# Criar o gráfico de dispersão
+plot(hare1, 
+     xlab = "Ano", 
+     ylab = "Número de lebres", 
+     main = "Gráfico de Dispersão: População de Lebres ao Longo dos Anos", 
+     pch = 19, col = "green", type = "p")
+
+```
+
+#Interpretação dos Resultados:
+
+#---------------------------------- #Gráfico da Série Temporal: #----------------------------------
+
+-   Este gráfico mostra como a abundância da lebre canadense varia ao longo do tempo. Você deve observar se há padrões sazonais, tendências ou ciclos evidentes na série de dados. #Verifique se há períodos de crescimento ou declínio consistentes e se há variações que podem indicar padrões cíclicos.
+
+#---------------------------------- #Gráfico de Dispersão: #----------------------------------
+
+-   Este gráfico mostra a relação entre os pontos de dados da abundância em diferentes momentos. A dispersão dos pontos pode indicar a variabilidade nos dados. #Se houver uma tendência clara ou padrões de agrupamento, isso pode sugerir relações entre os pontos de dados que merecem mais investigação.
+
+```{r}
+
+
+
+library(TSA)
+# Carregar o arquivo de dados "tempdub" 
+tempdub <- data("tempdub")
+
+# Convertendo a coluna de datas para o formato Date, se necessário
+# Supondo que a coluna de datas seja chamada "Date" e a coluna de temperatura seja "Temperature"
+tempdub$Date <- as.Date(tempdub$Date, format = "%Y-%m-%d")
+
+# Criar o gráfico da série temporal
+plot(tempdub, type = "l", 
+     main = "Temperatura em Dubuque, Iowa",
+     xlab = "Data", ylab = "Temperatura (°C)", col = "blue")
+
+# Criar o gráfico de dispersão
+plot(tempdub, type = "p",
+     main = "Dispersão das Temperaturas em Dubuque, Iowa",
+     xlab = "Data",
+     ylab = "Temperatura (°C)", 
+     col = "red", pch = 19)
+
+```
+
+#Gráfico da Série Temporal:
+
+-   Tendências Sazonais: Verifique se há padrões sazonais, como aumentos e quedas regulares na temperatura ao longo do ano. Isso pode indicar a presença de um padrão sazonal típico. #Tendências de Longo Prazo: Observe se há uma tendência geral de aumento ou diminuição na temperatura ao longo dos anos. Isso pode ser um indicador de mudanças climáticas ou outras influências a longo prazo. #Anomalias: Procure por picos ou vales inesperados que possam indicar eventos climáticos atípicos ou erros nos dados.
+
+    #Gráfico de Dispersão:
+
+-   Distribuição dos Dados: O gráfico de dispersão pode ajudar a visualizar a variação das temperaturas ao longo do tempo. Verifique se os pontos estão agrupados de alguma forma ou se há padrões evidentes na forma como os dados estão distribuídos. #Relações Temporais: Embora o gráfico de dispersão mostre a temperatura em diferentes datas, observe se há alguma relação visível entre as datas e as temperaturas.
+
+```{r}
+# Carregar os dados de vendas mensais 
+oilfilters_data <- data(oilfilters)
+# Plotar a série temporal
+plot(oilfilters, 
+     main = "Vendas Mensais de Filtros de Óleo John Deere", 
+     xlab = "Ano", 
+     ylab = "Vendas", 
+     col = "blue", 
+     lwd = 2)
+# Decomposição da série temporal para verificar a sazonalidade
+oilfilters_decomp <- decompose(oilfilters)
+plot(oilfilters_decomp)
+
+```
+
+```{r}
+
+
+
+# Definir o comprimento da série
+n <- 50
+# Simular uma série aleatória de valores independentes da distribuição normal
+set.seed(123)  # Para tornar o exemplo reproduzível
+random_series <- rnorm(n, mean = 0, sd = 1)  # Média 0, desvio padrão 1
+# Criar o gráfico da série temporal
+plot(random_series, type = "o", col = "blue", 
+     main = "Série Temporal Aleatória (N=50)", 
+     xlab = "Tempo", ylab = "Valor",
+     lwd = 2)
+```
+
+```{r}
+
+
+
+# Definir o comprimento da série
+n <- 50
+# Simular uma série aleatória de valores independentes da distribuição t-Student com 5 graus de liberdade
+set.seed(123)  # Para tornar o exemplo reproduzível
+random_series_t <- rt(n, df = 5)  # df = graus de liberdade
+# Criar o gráfico da série temporal
+plot(random_series_t, type = "o", col = "red", 
+     main = "Série Temporal Aleatória (Distribuição t-Student, N=50)", 
+     xlab = "Tempo", ylab = "Valor",
+     lwd = 2)
+```
+
+```{r}
+
+
+# Carregar os dados (assumindo que é um arquivo CSV)
+hours_data <- data("hours")
+# Plotar o gráfico das médias de horas trabalhadas por semana
+plot(hours, type = "l", col = "blue",
+     main = "Médias de Horas Trabalhadas por Semana (Julho 1982 - Junho 1987)",
+     xlab = "Tempo", ylab = "Horas Trabalhadas")
+
+```
+
+```{r}
+
+data(wages)
+
+### a) Carregar os dados
+
+# Supondo que haja uma coluna "Date" e uma "Wage" com os valores de salário médio
+plot(wages, type = "l", col = "blue",
+     main = "Medias dos Salarios Medios por Hora (Julho 1981 - Junho 1987)"
+     #xlab = "Data", ylab = "Salario Medio (em dolares)"
+     )
+#b)# Ajustar um modelo de regressão linear (tendência linear)
+tendencia_linear <- lm(Wages ~ Time, data = wages)
+
+# Ver a saída do modelo
+summary(tendencia_linear)
+
+# Salvar os resíduos padronizados
+residuos_padronizados <- rstandard(tendencia_linear)
+
+# Plotar a linha de tendência no gráfico original
+plot(wages$Date, wages$Wage, type = "o", col = "blue",
+     main = "Tendência Linear Ajustada para os Salários Médios por Hora",
+     xlab = "Data", ylab = "Salário Médio (em dólares)")
+abline(tendencia_linear, col = "red", lwd = 2)  # Linha de tendência
+
+
+#c)# Plotar os resíduos padronizados
+plot(wages_data$Date, residuos_padronizados, type = "o", col = "purple",
+     main = "Resíduos Padronizados do Ajuste Linear",
+     xlab = "Data", ylab = "Resíduo Padronizado")
+abline(h = 0, col = "red", lwd = 2)  # Linha em zero para referência
+
+#d)# Criar uma variável quadrática do tempo
+wages_data$Date2 <- wages_data$Date^2
+# Ajustar o modelo de tendência quadrática
+tendencia_quadratica <- lm(Wage ~ Date + Date2, data = wages_data)
+# Ver a saída do modelo quadrático
+summary(tendencia_quadratica)
+# Salvar os resíduos padronizados do modelo quadrático
+residuos_padronizados_quad <- rstandard(tendencia_quadratica)
+# Plotar a tendência quadrática no gráfico original
+plot(wages_data$Date, wages_data$Wage, type = "o", col = "blue",
+     main = "Tendência Quadrática Ajustada para os Salários Médios por Hora",
+     xlab = "Data", ylab = "Salário Médio (em dólares)")
+# Adicionar a curva de tendência quadrática
+lines(wages_data$Date, fitted(tendencia_quadratica), col = "green", lwd = 2)
+
+#E) # Plotar os resíduos padronizados do modelo quadrático
+plot(wages_data$Date, residuos_padronizados_quad, type = "o", col = "purple",
+     main = "Resíduos Padronizados do Ajuste Quadrático",
+     xlab = "Data", ylab = "Resíduo Padronizado")
+abline(h = 0, col = "red", lwd = 2)  # Linha de referência em zero
+  
+```

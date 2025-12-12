@@ -1,0 +1,46 @@
+---
+title: "prophet"
+author: "Fabiano F. dos Santos"
+date: "2024-10-17"
+output: ioslides_presentation
+---
+
+## O que é o Prophet?
+
+Em fevereiro de 2017, Sean J. Taylor e Ben Letham desenvolveram internamente uma biblioteca de código aberta Facebook Prophet (2017), onde está disponível em Python e R.
+
+## Qual a finalidade de sua existência?
+
+-   A primeira delas diz respeito à **inflexibilidade e fragilidade das técnicas de previsão completamente automáticas** para incorporar suposições ou heurísticas úteis.
+
+-   A segunda questão está relacionada à **dependência de um analista especializado** e competente em ciência de dados para o uso de ferramentas mais robustas.
+
+## Características
+
+-   Observações registradas em intervalos horários, diários ou semanais, com um histórico ideal de um ano;
+-   Presença de sazonalidades distintas que seguem padrões “humanos”, como variações ao longo da semana e ao longo do ano;
+-   Ocorrência de feriados importantes, mesmo que em intervalos irregulares, desde que essas datas sejam conhecidas antecipadamente;
+-   Casos em que há um número significativo de observações faltantes ou valores discrepantes que fogem do padrão;
+-   Presença de mudanças na tendência histórica, como lançamentos de produtos ou alterações nos registros;
+-   Tendências que seguem curvas de crescimento não lineares, nas quais a evolução da série temporal atinge um limite natural ou se estabiliza.
+
+## Descrição do método
+
+O método é um modelo de regressão aditivo, ou seja, é uma soma de vários componentes, sendo eles o componente de tendência, as curvas de sazonalidade anual, mensal e diária, e os efeitos de feriados/datas especiais
+
+$$\bar{Z}_t = T(t) + S(t) + h(t) + \epsilon_t$$, onde:
+
+-   T (t) é o componente de tendência;
+-   S(t) é o componente de sazonalidade;
+-   h(t) é os efeitos de feriados;
+-   $\epsilon_t$ é o ruído branco.
+
+## Quando usar?
+
+-   funciona bem com séries temporais que apresentam **fortes efeitos sazonais** e que possuem vários **anos de dados históricos**;
+
+-   possui robustez em relação a **dados faltantes e deslocamentos na tendência**, e geralmente lida bem com valores atípicos;
+
+-   prefrível em situações de **séries temporais com múltiplas sazonalidades**, especialmente aquelas de ”escala humana”(diárias, semanais, anuais). É eficaz quando há feriados ou eventos especiais que afetam os padrões dos dados.
+
+-   útil para previsões em ambientes de negócios, oferecendo resultados precisos com configurações intuitivas e facilmente interpretáveis.
